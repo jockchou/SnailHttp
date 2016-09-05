@@ -19,7 +19,7 @@ PHP_METHOD(SnailHttp_Stream, read);
 PHP_METHOD(SnailHttp_Stream, getContents);
 PHP_METHOD(SnailHttp_Stream, getMetadata);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_snailhttp_stream_seek, 0, 0, 2)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_snailhttp_stream_seek, 0, 0, 1)
 	ZEND_ARG_INFO(0, offset)
 	ZEND_ARG_INFO(0, whence)
 ZEND_END_ARG_INFO()

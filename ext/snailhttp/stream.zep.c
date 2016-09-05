@@ -79,10 +79,14 @@ PHP_METHOD(SnailHttp_Stream, seek) {
 	zval *offset_param = NULL, *whence_param = NULL;
 	int offset, whence;
 
-	zephir_fetch_params(0, 2, 0, &offset_param, &whence_param);
+	zephir_fetch_params(0, 1, 1, &offset_param, &whence_param);
 
 	offset = zephir_get_intval(offset_param);
-	whence = zephir_get_intval(whence_param);
+	if (!whence_param) {
+		whence = 0;
+	} else {
+		whence = zephir_get_intval(whence_param);
+	}
 
 
 

@@ -41,7 +41,7 @@ class Stream implements StreamInterface
     
     }
 
-    public function seek(int offset, int whence)
+    public function seek(int offset, int whence = self::SEEK_SET)
     {
     
     }
