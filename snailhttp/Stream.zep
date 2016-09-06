@@ -4,48 +4,31 @@ use Psr\Http\Message\StreamInterface;
 
 class Stream implements StreamInterface
 {
-    private stream;
-    private size;
-    private seekable;
-    private readable;
-    private writable;
-    private uri;
-    private customMetadata = [];
+    protected  stream;
+    protected  size;
+    protected  seekable;
+    protected  readable;
+    protected  writable;
+    protected  uri;
     
     /** @var array Hash of readable and writable stream types */
-    private static readWriteHash = [
-        "read": [
-            "r": true, "w+": true, "r+": true, "x+": true, "c+": true,
-            "rb": true, "w+b": true, "r+b": true, "x+b": true,
-            "c+b": true, "rt": true, "w+t": true, "r+t": true,
-            "x+t": true, "c+t": true, "a+": true
-        ],
-        "write": [
-            "w": true, "w+": true, "rw": true, "r+": true, "x+": true,
-            "c+": true, "wb": true, "w+b": true, "r+b": true,
-            "x+b": true, "c+b": true, "w+t": true, "r+t": true,
-            "x+t": true, "c+t": true, "a": true, "a+": true
-        ]
+    protected static readWriteHash = [
+        "read": ["r", "r+", "w+", "a+", "x+", "c+"],
+        "write": ["r+", "w", "w+", "a", "a+", "x", "x+", "c", "c+"]
     ];
     
-    public function __construct(resource stream, array options = [])
+    
+    public function __construct(resource stream)
     {   
-        var meta = null;
-        
-        if isset options["size"] {
-            let this->size = options["size"];
-        }
-        
-        if isset options["metadata"] {
-            let this->customMetadata = options["metadata"];
-        }
+        var meta = null, mode;
         
         let this->stream = stream;
         let meta = stream_get_meta_data(this->stream);
         
+        let mode = meta["mode"];
         let this->seekable = meta["seekable "];
-        let this->readable = isset(self::readWriteHash["read"][meta["mode"]]);
-        let this->writable = isset(self::readWriteHash["write"][meta["mode"]]);
+        let this->readable = in_array(mode, self::readWriteHash["read"]);
+        let this->writable = in_array(mode, self::readWriteHash["write"]);
         let this->uri = this->getMetadata("uri");
     }
     
@@ -66,26 +49,24 @@ class Stream implements StreamInterface
 
     public function close() -> void
     {
-        if isset this->stream {
-            if is_resource(this->stream) {
-                fclose(this->stream);
-            }
-            
-            this->detach();
+        if is_resource(this->stream) {
+            fclose(this->stream);
         }
+        
+        this->detach();
     }
 
     public function detach() -> resource|null
     {   
         var result;
         
-        if !isset this->stream {
+        if !is_resource(this->stream) {
             return null;
         }
         
         let result = this->stream;
-        unset(this->stream);
         
+        let this->stream = null;
         let this->size = null;
         let this->uri = null;
         let this->readable = false;
@@ -103,7 +84,7 @@ class Stream implements StreamInterface
             return this->size;
         }
         
-        if !isset this->stream {
+        if !is_resource(this->stream) {
             return null;
         }
         
@@ -184,7 +165,7 @@ class Stream implements StreamInterface
 
     public function isReadable() -> boolean
     {
-        return $this->readable;
+        return this->readable;
     }
 
     public function read(int length) -> string
@@ -218,16 +199,16 @@ class Stream implements StreamInterface
     {
         var meta = null;
         
-        if !isset this->stream {
+        if !is_resource(this->stream) {
             return key ? null : [];
-        } elseif !key {
-            let meta = stream_get_meta_data(this->stream);
-            return array_merge(this->customMetadata, meta);
-        } elseif isset this->customMetadata[key] {
-            return this->customMetadata[key];
         }
         
         let meta = stream_get_meta_data(this->stream);
-        return isset meta[key] ? meta[key] : null;
+        
+        if !key {
+            return meta; 
+        } else {
+            return isset meta[key] ? meta[key] : null;
+        }
     }
 }

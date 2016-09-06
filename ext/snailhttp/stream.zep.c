@@ -13,9 +13,9 @@
 
 #include "kernel/main.h"
 #include "kernel/memory.h"
-#include "kernel/array.h"
 #include "kernel/object.h"
 #include "kernel/fcall.h"
+#include "kernel/array.h"
 #include "kernel/operators.h"
 #include "kernel/file.h"
 #include "kernel/exception.h"
@@ -26,24 +26,20 @@ ZEPHIR_INIT_CLASS(SnailHttp_Stream) {
 
 	ZEPHIR_REGISTER_CLASS(SnailHttp, Stream, snailhttp, stream, snailhttp_stream_method_entry, 0);
 
-	zend_declare_property_null(snailhttp_stream_ce, SL("stream"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(snailhttp_stream_ce, SL("stream"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(snailhttp_stream_ce, SL("size"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(snailhttp_stream_ce, SL("size"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(snailhttp_stream_ce, SL("seekable"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(snailhttp_stream_ce, SL("seekable"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(snailhttp_stream_ce, SL("readable"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(snailhttp_stream_ce, SL("readable"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(snailhttp_stream_ce, SL("writable"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(snailhttp_stream_ce, SL("writable"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(snailhttp_stream_ce, SL("uri"), ZEND_ACC_PRIVATE TSRMLS_CC);
-
-	zend_declare_property_null(snailhttp_stream_ce, SL("customMetadata"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(snailhttp_stream_ce, SL("uri"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/** @var array Hash of readable and writable stream types */
-	zend_declare_property_null(snailhttp_stream_ce, SL("readWriteHash"), ZEND_ACC_PRIVATE|ZEND_ACC_STATIC TSRMLS_CC);
-
-	snailhttp_stream_ce->create_object = zephir_init_properties_SnailHttp_Stream;
+	zend_declare_property_null(snailhttp_stream_ce, SL("readWriteHash"), ZEND_ACC_PROTECTED|ZEND_ACC_STATIC TSRMLS_CC);
 
 	zend_class_implements(snailhttp_stream_ce TSRMLS_CC, 1, zephir_get_internal_ce(SS("psr\\http\\message\\streaminterface") TSRMLS_CC));
 	return SUCCESS;
@@ -53,58 +49,43 @@ ZEPHIR_INIT_CLASS(SnailHttp_Stream) {
 PHP_METHOD(SnailHttp_Stream, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *options = NULL;
-	zval *stream, *options_param = NULL, *meta = NULL, *_2, *_3, *_4, *_5, *_6, *_7, *_8, *_9, *_10 = NULL, *_11, *_0$$3, *_1$$4;
+	zval *stream, *meta = NULL, *mode = NULL, *_0, *_1, *_2, *_3, *_4, *_5, *_6 = NULL, *_7;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &stream, &options_param);
+	zephir_fetch_params(1, 1, 0, &stream);
 
-	if (!options_param) {
-		ZEPHIR_INIT_VAR(options);
-		array_init(options);
-	} else {
-		zephir_get_arrval(options, options_param);
-	}
 
 
 	ZEPHIR_INIT_VAR(meta);
 	ZVAL_NULL(meta);
-	if (zephir_array_isset_string(options, SS("size"))) {
-		zephir_array_fetch_string(&_0$$3, options, SL("size"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 36 TSRMLS_CC);
-		zephir_update_property_this(this_ptr, SL("size"), _0$$3 TSRMLS_CC);
-	}
-	if (zephir_array_isset_string(options, SS("metadata"))) {
-		zephir_array_fetch_string(&_1$$4, options, SL("metadata"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 40 TSRMLS_CC);
-		zephir_update_property_this(this_ptr, SL("customMetadata"), _1$$4 TSRMLS_CC);
-	}
 	zephir_update_property_this(this_ptr, SL("stream"), stream TSRMLS_CC);
-	_2 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 1, _2);
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+	ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 1, _0);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_3, meta, SL("seekable "), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 46 TSRMLS_CC);
-	zephir_update_property_this(this_ptr, SL("seekable"), _3 TSRMLS_CC);
-	_4 = zephir_fetch_static_property_ce(snailhttp_stream_ce, SL("readWriteHash") TSRMLS_CC);
-	zephir_array_fetch_string(&_5, _4, SL("read"), PH_READONLY, "snailhttp/Stream.zep", 47 TSRMLS_CC);
-	zephir_array_fetch_string(&_6, meta, SL("mode"), PH_READONLY, "snailhttp/Stream.zep", 47 TSRMLS_CC);
-	if (zephir_array_isset(_5, _6)) {
+	ZEPHIR_OBS_VAR(mode);
+	zephir_array_fetch_string(&mode, meta, SL("mode"), PH_NOISY, "snailhttp/Stream.zep", 28 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, meta, SL("seekable "), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 29 TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("seekable"), _1 TSRMLS_CC);
+	_2 = zephir_fetch_static_property_ce(snailhttp_stream_ce, SL("readWriteHash") TSRMLS_CC);
+	zephir_array_fetch_string(&_3, _2, SL("read"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 30 TSRMLS_CC);
+	if (zephir_fast_in_array(mode, _3 TSRMLS_CC)) {
 		zephir_update_property_this(this_ptr, SL("readable"), ZEPHIR_GLOBAL(global_true) TSRMLS_CC);
 	} else {
 		zephir_update_property_this(this_ptr, SL("readable"), ZEPHIR_GLOBAL(global_false) TSRMLS_CC);
 	}
-	_7 = zephir_fetch_static_property_ce(snailhttp_stream_ce, SL("readWriteHash") TSRMLS_CC);
-	zephir_array_fetch_string(&_8, _7, SL("write"), PH_READONLY, "snailhttp/Stream.zep", 48 TSRMLS_CC);
-	zephir_array_fetch_string(&_9, meta, SL("mode"), PH_READONLY, "snailhttp/Stream.zep", 48 TSRMLS_CC);
-	if (zephir_array_isset(_8, _9)) {
+	_4 = zephir_fetch_static_property_ce(snailhttp_stream_ce, SL("readWriteHash") TSRMLS_CC);
+	zephir_array_fetch_string(&_5, _4, SL("write"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 31 TSRMLS_CC);
+	if (zephir_fast_in_array(mode, _5 TSRMLS_CC)) {
 		zephir_update_property_this(this_ptr, SL("writable"), ZEPHIR_GLOBAL(global_true) TSRMLS_CC);
 	} else {
 		zephir_update_property_this(this_ptr, SL("writable"), ZEPHIR_GLOBAL(global_false) TSRMLS_CC);
 	}
-	ZEPHIR_INIT_VAR(_11);
-	ZVAL_STRING(_11, "uri", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&_10, this_ptr, "getmetadata", NULL, 0, _11);
-	zephir_check_temp_parameter(_11);
+	ZEPHIR_INIT_VAR(_7);
+	ZVAL_STRING(_7, "uri", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_6, this_ptr, "getmetadata", NULL, 0, _7);
+	zephir_check_temp_parameter(_7);
 	zephir_check_call_status();
-	zephir_update_property_this(this_ptr, SL("uri"), _10 TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("uri"), _6 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -146,34 +127,33 @@ PHP_METHOD(SnailHttp_Stream, __destruct) {
 
 PHP_METHOD(SnailHttp_Stream, close) {
 
-	zval *_0$$3, *_1$$4;
+	zval *_0, *_1$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
 
-	if (zephir_isset_property(this_ptr, SS("stream") TSRMLS_CC)) {
-		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
-		if (Z_TYPE_P(_0$$3) == IS_RESOURCE) {
-			_1$$4 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
-			zephir_fclose(_1$$4 TSRMLS_CC);
-		}
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "detach", NULL, 0);
-		zephir_check_call_status();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+	if (Z_TYPE_P(_0) == IS_RESOURCE) {
+		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+		zephir_fclose(_1$$3 TSRMLS_CC);
 	}
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "detach", NULL, 0);
+	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
 }
 
 PHP_METHOD(SnailHttp_Stream, detach) {
 
-	zval *result = NULL;
+	zval *result = NULL, *_0;
 
 
-	if (!(zephir_isset_property(this_ptr, SS("stream") TSRMLS_CC))) {
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+	if (!(Z_TYPE_P(_0) == IS_RESOURCE)) {
 		RETURN_NULL();
 	}
 	result = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
-	zephir_unset_property(this_ptr, "stream" TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("stream"), ZEPHIR_GLOBAL(global_null) TSRMLS_CC);
 	zephir_update_property_this(this_ptr, SL("size"), ZEPHIR_GLOBAL(global_null) TSRMLS_CC);
 	zephir_update_property_this(this_ptr, SL("uri"), ZEPHIR_GLOBAL(global_null) TSRMLS_CC);
 	if (0) {
@@ -197,7 +177,7 @@ PHP_METHOD(SnailHttp_Stream, detach) {
 
 PHP_METHOD(SnailHttp_Stream, getSize) {
 
-	zval *stats = NULL, *_0, *_1, *_3, *_2$$5, *_4$$6;
+	zval *stats = NULL, *_0, *_1, *_2, *_4, *_3$$5, *_5$$6;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
@@ -206,21 +186,22 @@ PHP_METHOD(SnailHttp_Stream, getSize) {
 	if (Z_TYPE_P(_0) != IS_NULL) {
 		RETURN_MM_MEMBER(this_ptr, "size");
 	}
-	if (!(zephir_isset_property(this_ptr, SS("stream") TSRMLS_CC))) {
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+	if (!(Z_TYPE_P(_1) == IS_RESOURCE)) {
 		RETURN_MM_NULL();
 	}
-	_1 = zephir_fetch_nproperty_this(this_ptr, SL("uri"), PH_NOISY_CC);
-	if (zephir_is_true(_1)) {
-		_2$$5 = zephir_fetch_nproperty_this(this_ptr, SL("uri"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(NULL, "clearstatcache", NULL, 3, ZEPHIR_GLOBAL(global_true), _2$$5);
+	_2 = zephir_fetch_nproperty_this(this_ptr, SL("uri"), PH_NOISY_CC);
+	if (zephir_is_true(_2)) {
+		_3$$5 = zephir_fetch_nproperty_this(this_ptr, SL("uri"), PH_NOISY_CC);
+		ZEPHIR_CALL_FUNCTION(NULL, "clearstatcache", NULL, 3, ZEPHIR_GLOBAL(global_true), _3$$5);
 		zephir_check_call_status();
 	}
-	_3 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&stats, "fstat", NULL, 4, _3);
+	_4 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+	ZEPHIR_CALL_FUNCTION(&stats, "fstat", NULL, 4, _4);
 	zephir_check_call_status();
 	if (zephir_array_isset_string(stats, SS("size"))) {
-		zephir_array_fetch_string(&_4$$6, stats, SL("size"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 118 TSRMLS_CC);
-		zephir_update_property_this(this_ptr, SL("size"), _4$$6 TSRMLS_CC);
+		zephir_array_fetch_string(&_5$$6, stats, SL("size"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 99 TSRMLS_CC);
+		zephir_update_property_this(this_ptr, SL("size"), _5$$6 TSRMLS_CC);
 		RETURN_MM_MEMBER(this_ptr, "size");
 	}
 	RETURN_MM_NULL();
@@ -238,7 +219,7 @@ PHP_METHOD(SnailHttp_Stream, tell) {
 	ZEPHIR_CALL_FUNCTION(&result, "ftell", NULL, 5, _0);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(result)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Unable to determine stream position", "snailhttp/Stream.zep", 131);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Unable to determine stream position", "snailhttp/Stream.zep", 112);
 		return;
 	}
 	RETURN_CCTOR(result);
@@ -294,7 +275,7 @@ PHP_METHOD(SnailHttp_Stream, seek) {
 	ZEPHIR_CALL_FUNCTION(&_4, "fseek", NULL, 6, _1, &_2, &_3);
 	zephir_check_call_status();
 	if (!(zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Stream is not seekable", "snailhttp/Stream.zep", 150);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Stream is not seekable", "snailhttp/Stream.zep", 131);
 		return;
 	} else if (ZEPHIR_IS_LONG_IDENTICAL(_4, -1)) {
 		ZEPHIR_INIT_VAR(_5$$4);
@@ -309,7 +290,7 @@ PHP_METHOD(SnailHttp_Stream, seek) {
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(NULL, _5$$4, "__construct", NULL, 8, _9$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$4, "snailhttp/Stream.zep", 152 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$4, "snailhttp/Stream.zep", 133 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -353,7 +334,7 @@ PHP_METHOD(SnailHttp_Stream, write) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("writable"), PH_NOISY_CC);
 	if (!(zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot write to a non-writable stream", "snailhttp/Stream.zep", 171);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot write to a non-writable stream", "snailhttp/Stream.zep", 152);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("size"), ZEPHIR_GLOBAL(global_null) TSRMLS_CC);
@@ -361,7 +342,7 @@ PHP_METHOD(SnailHttp_Stream, write) {
 	ZEPHIR_INIT_VAR(result);
 	zephir_fwrite(result, _1, str TSRMLS_CC);
 	if (ZEPHIR_IS_FALSE_IDENTICAL(result)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Write to stream fail", "snailhttp/Stream.zep", 179);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Write to stream fail", "snailhttp/Stream.zep", 160);
 		return;
 	}
 	RETURN_CCTOR(result);
@@ -389,7 +370,7 @@ PHP_METHOD(SnailHttp_Stream, read) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("readable"), PH_NOISY_CC);
 	if (!(zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot read from non-readable stream", "snailhttp/Stream.zep", 195);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot read from non-readable stream", "snailhttp/Stream.zep", 176);
 		return;
 	}
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
@@ -398,7 +379,7 @@ PHP_METHOD(SnailHttp_Stream, read) {
 	ZEPHIR_CALL_FUNCTION(&result, "fread", NULL, 9, _1, &_2);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(result)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read from stream fail", "snailhttp/Stream.zep", 201);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read from stream fail", "snailhttp/Stream.zep", 182);
 		return;
 	}
 	RETURN_CCTOR(result);
@@ -416,7 +397,7 @@ PHP_METHOD(SnailHttp_Stream, getContents) {
 	ZEPHIR_CALL_FUNCTION(&contents, "stream_get_contents", NULL, 2, _0);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(contents)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read contents from stream fail", "snailhttp/Stream.zep", 211);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read contents from stream fail", "snailhttp/Stream.zep", 192);
 		return;
 	}
 	RETURN_CCTOR(contents);
@@ -426,7 +407,7 @@ PHP_METHOD(SnailHttp_Stream, getContents) {
 PHP_METHOD(SnailHttp_Stream, getMetadata) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *key = NULL, *meta = NULL, *_0, *_6, *_7, *_1$$3, *_2$$4, *_3$$4, *_4$$5, *_5$$5;
+	zval *key = NULL, *meta = NULL, *_0, *_2, *_1$$3, *_3$$5;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &key);
@@ -438,8 +419,8 @@ PHP_METHOD(SnailHttp_Stream, getMetadata) {
 
 	ZEPHIR_INIT_VAR(meta);
 	ZVAL_NULL(meta);
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("customMetadata"), PH_NOISY_CC);
-	if (!(zephir_isset_property(this_ptr, SS("stream") TSRMLS_CC))) {
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+	if (!(Z_TYPE_P(_0) == IS_RESOURCE)) {
 		ZEPHIR_INIT_VAR(_1$$3);
 		if (zephir_is_true(key)) {
 			ZVAL_NULL(_1$$3);
@@ -447,54 +428,27 @@ PHP_METHOD(SnailHttp_Stream, getMetadata) {
 			array_init(_1$$3);
 		}
 		RETURN_CCTOR(_1$$3);
-	} else if (!(zephir_is_true(key))) {
-		_2$$4 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 1, _2$$4);
-		zephir_check_call_status();
-		_3$$4 = zephir_fetch_nproperty_this(this_ptr, SL("customMetadata"), PH_NOISY_CC);
-		zephir_fast_array_merge(return_value, &(_3$$4), &(meta) TSRMLS_CC);
-		RETURN_MM();
-	} else if (zephir_array_isset(_0, key)) {
-		_4$$5 = zephir_fetch_nproperty_this(this_ptr, SL("customMetadata"), PH_NOISY_CC);
-		zephir_array_fetch(&_5$$5, _4$$5, key, PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 227 TSRMLS_CC);
-		RETURN_CTOR(_5$$5);
 	}
-	_6 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 1, _6);
+	_2 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
+	ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 1, _2);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_7);
-	if (zephir_array_isset(meta, key)) {
-		zephir_array_fetch(&_7, meta, key, PH_NOISY, "snailhttp/Stream.zep", 231 TSRMLS_CC);
+	if (!(zephir_is_true(key))) {
+		RETURN_CCTOR(meta);
 	} else {
-		ZVAL_NULL(_7);
-	}
-	RETURN_CCTOR(_7);
-
-}
-
-zend_object_value zephir_init_properties_SnailHttp_Stream(zend_class_entry *class_type TSRMLS_DC) {
-
-		zval *_0, *_1$$3;
-
-		ZEPHIR_MM_GROW();
-	
-	{
-		zval *this_ptr = NULL;
-		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
-		_0 = zephir_fetch_nproperty_this(this_ptr, SL("customMetadata"), PH_NOISY_CC);
-		if (Z_TYPE_P(_0) == IS_NULL) {
-			ZEPHIR_INIT_VAR(_1$$3);
-			array_init(_1$$3);
-			zephir_update_property_this(this_ptr, SL("customMetadata"), _1$$3 TSRMLS_CC);
+		ZEPHIR_INIT_VAR(_3$$5);
+		if (zephir_array_isset(meta, key)) {
+			zephir_array_fetch(&_3$$5, meta, key, PH_NOISY, "snailhttp/Stream.zep", 211 TSRMLS_CC);
+		} else {
+			ZVAL_NULL(_3$$5);
 		}
-		ZEPHIR_MM_RESTORE();
-		return Z_OBJVAL_P(this_ptr);
+		RETURN_CCTOR(_3$$5);
 	}
 
 }
 
 void zephir_init_static_properties_SnailHttp_Stream(TSRMLS_D) {
 
+	zval *_2 = NULL;
 	zval *_0, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -502,43 +456,55 @@ void zephir_init_static_properties_SnailHttp_Stream(TSRMLS_D) {
 	ZEPHIR_INIT_VAR(_0);
 	zephir_create_array(_0, 2, 0 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_1);
-	zephir_create_array(_1, 16, 0 TSRMLS_CC);
-	zephir_array_update_string(&_1, SL("r"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("w+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("r+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("x+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("c+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("rb"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("w+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("r+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("x+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("c+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("rt"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("w+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("r+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("x+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("c+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("a+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
+	zephir_create_array(_1, 6, 0 TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_STRING(_2, "r", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "r+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "w+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "a+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "x+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "c+", 1);
+	zephir_array_fast_append(_1, _2);
 	zephir_array_update_string(&_0, SL("read"), &_1, PH_COPY | PH_SEPARATE);
 	ZEPHIR_INIT_NVAR(_1);
-	zephir_create_array(_1, 17, 0 TSRMLS_CC);
-	zephir_array_update_string(&_1, SL("w"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("w+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("rw"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("r+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("x+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("c+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("wb"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("w+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("r+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("x+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("c+b"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("w+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("r+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("x+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("c+t"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("a"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
-	zephir_array_update_string(&_1, SL("a+"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
+	zephir_create_array(_1, 9, 0 TSRMLS_CC);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "r+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "w", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "w+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "a", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "a+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "x", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "x+", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "c", 1);
+	zephir_array_fast_append(_1, _2);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "c+", 1);
+	zephir_array_fast_append(_1, _2);
 	zephir_array_update_string(&_0, SL("write"), &_1, PH_COPY | PH_SEPARATE);
 	zephir_update_static_property_ce(snailhttp_stream_ce, SL("readWriteHash"), &_0 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
