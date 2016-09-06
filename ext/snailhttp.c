@@ -115,6 +115,7 @@ static PHP_RINIT_FUNCTION(snailhttp)
 
 	zephir_initialize_memory(snailhttp_globals_ptr TSRMLS_CC);
 
+	zephir_init_static_properties_SnailHttp_Stream(TSRMLS_C);
 
 	return SUCCESS;
 }
