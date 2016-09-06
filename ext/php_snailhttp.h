@@ -14,7 +14,7 @@
 #define PHP_SNAILHTTP_VERSION     "0.0.1"
 #define PHP_SNAILHTTP_EXTNAME     "snailhttp"
 #define PHP_SNAILHTTP_AUTHOR      ""
-#define PHP_SNAILHTTP_ZEPVERSION  "0.9.4a-dev-cbfe80715d"
+#define PHP_SNAILHTTP_ZEPVERSION  "0.9.4a-dev-7e304ba18c"
 #define PHP_SNAILHTTP_DESCRIPTION ""
 
 
