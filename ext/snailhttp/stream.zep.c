@@ -129,6 +129,21 @@ PHP_METHOD(SnailHttp_Stream, __toString) {
 
 }
 
+/**
+ * Closes the stream when the destructed
+ */
+PHP_METHOD(SnailHttp_Stream, __destruct) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "close", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_MM_RESTORE();
+
+}
+
 PHP_METHOD(SnailHttp_Stream, close) {
 
 	zval *_0$$3, *_1$$4;
@@ -204,7 +219,7 @@ PHP_METHOD(SnailHttp_Stream, getSize) {
 	ZEPHIR_CALL_FUNCTION(&stats, "fstat", NULL, 4, _3);
 	zephir_check_call_status();
 	if (zephir_array_isset_string(stats, SS("size"))) {
-		zephir_array_fetch_string(&_4$$6, stats, SL("size"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 110 TSRMLS_CC);
+		zephir_array_fetch_string(&_4$$6, stats, SL("size"), PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 118 TSRMLS_CC);
 		zephir_update_property_this(this_ptr, SL("size"), _4$$6 TSRMLS_CC);
 		RETURN_MM_MEMBER(this_ptr, "size");
 	}
@@ -223,7 +238,7 @@ PHP_METHOD(SnailHttp_Stream, tell) {
 	ZEPHIR_CALL_FUNCTION(&result, "ftell", NULL, 5, _0);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(result)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Unable to determine stream position", "snailhttp/Stream.zep", 123);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Unable to determine stream position", "snailhttp/Stream.zep", 131);
 		return;
 	}
 	RETURN_CCTOR(result);
@@ -279,7 +294,7 @@ PHP_METHOD(SnailHttp_Stream, seek) {
 	ZEPHIR_CALL_FUNCTION(&_4, "fseek", NULL, 6, _1, &_2, &_3);
 	zephir_check_call_status();
 	if (!(zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Stream is not seekable", "snailhttp/Stream.zep", 142);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Stream is not seekable", "snailhttp/Stream.zep", 150);
 		return;
 	} else if (ZEPHIR_IS_LONG_IDENTICAL(_4, -1)) {
 		ZEPHIR_INIT_VAR(_5$$4);
@@ -294,7 +309,7 @@ PHP_METHOD(SnailHttp_Stream, seek) {
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(NULL, _5$$4, "__construct", NULL, 8, _9$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$4, "snailhttp/Stream.zep", 144 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$4, "snailhttp/Stream.zep", 152 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -338,7 +353,7 @@ PHP_METHOD(SnailHttp_Stream, write) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("writable"), PH_NOISY_CC);
 	if (!(zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot write to a non-writable stream", "snailhttp/Stream.zep", 163);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot write to a non-writable stream", "snailhttp/Stream.zep", 171);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("size"), ZEPHIR_GLOBAL(global_null) TSRMLS_CC);
@@ -346,7 +361,7 @@ PHP_METHOD(SnailHttp_Stream, write) {
 	ZEPHIR_INIT_VAR(result);
 	zephir_fwrite(result, _1, str TSRMLS_CC);
 	if (ZEPHIR_IS_FALSE_IDENTICAL(result)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Write to stream fail", "snailhttp/Stream.zep", 171);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Write to stream fail", "snailhttp/Stream.zep", 179);
 		return;
 	}
 	RETURN_CCTOR(result);
@@ -374,7 +389,7 @@ PHP_METHOD(SnailHttp_Stream, read) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("readable"), PH_NOISY_CC);
 	if (!(zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot read from non-readable stream", "snailhttp/Stream.zep", 187);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot read from non-readable stream", "snailhttp/Stream.zep", 195);
 		return;
 	}
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
@@ -383,7 +398,7 @@ PHP_METHOD(SnailHttp_Stream, read) {
 	ZEPHIR_CALL_FUNCTION(&result, "fread", NULL, 9, _1, &_2);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(result)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read from stream fail", "snailhttp/Stream.zep", 193);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read from stream fail", "snailhttp/Stream.zep", 201);
 		return;
 	}
 	RETURN_CCTOR(result);
@@ -401,7 +416,7 @@ PHP_METHOD(SnailHttp_Stream, getContents) {
 	ZEPHIR_CALL_FUNCTION(&contents, "stream_get_contents", NULL, 2, _0);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(contents)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read contents from stream fail", "snailhttp/Stream.zep", 203);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Read contents from stream fail", "snailhttp/Stream.zep", 211);
 		return;
 	}
 	RETURN_CCTOR(contents);
@@ -441,7 +456,7 @@ PHP_METHOD(SnailHttp_Stream, getMetadata) {
 		RETURN_MM();
 	} else if (zephir_array_isset(_0, key)) {
 		_4$$5 = zephir_fetch_nproperty_this(this_ptr, SL("customMetadata"), PH_NOISY_CC);
-		zephir_array_fetch(&_5$$5, _4$$5, key, PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 219 TSRMLS_CC);
+		zephir_array_fetch(&_5$$5, _4$$5, key, PH_NOISY | PH_READONLY, "snailhttp/Stream.zep", 227 TSRMLS_CC);
 		RETURN_CTOR(_5$$5);
 	}
 	_6 = zephir_fetch_nproperty_this(this_ptr, SL("stream"), PH_NOISY_CC);
@@ -449,7 +464,7 @@ PHP_METHOD(SnailHttp_Stream, getMetadata) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_7);
 	if (zephir_array_isset(meta, key)) {
-		zephir_array_fetch(&_7, meta, key, PH_NOISY, "snailhttp/Stream.zep", 223 TSRMLS_CC);
+		zephir_array_fetch(&_7, meta, key, PH_NOISY, "snailhttp/Stream.zep", 231 TSRMLS_CC);
 	} else {
 		ZVAL_NULL(_7);
 	}

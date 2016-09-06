@@ -5,6 +5,7 @@ ZEPHIR_INIT_CLASS(SnailHttp_Stream);
 
 PHP_METHOD(SnailHttp_Stream, __construct);
 PHP_METHOD(SnailHttp_Stream, __toString);
+PHP_METHOD(SnailHttp_Stream, __destruct);
 PHP_METHOD(SnailHttp_Stream, close);
 PHP_METHOD(SnailHttp_Stream, detach);
 PHP_METHOD(SnailHttp_Stream, getSize);
@@ -47,6 +48,7 @@ ZEND_END_ARG_INFO()
 ZEPHIR_INIT_FUNCS(snailhttp_stream_method_entry) {
 	PHP_ME(SnailHttp_Stream, __construct, arginfo_snailhttp_stream___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(SnailHttp_Stream, __toString, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(SnailHttp_Stream, __destruct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_DTOR)
 	PHP_ME(SnailHttp_Stream, close, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(SnailHttp_Stream, detach, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(SnailHttp_Stream, getSize, NULL, ZEND_ACC_PUBLIC)

@@ -55,6 +55,14 @@ class Stream implements StreamInterface
         this->seek(0);
         return (string)stream_get_contents(this->stream);
     }
+    
+    /**
+     * Closes the stream when the destructed
+     */
+    public function __destruct()
+    {
+        this->close();
+    }
 
     public function close() -> void
     {
