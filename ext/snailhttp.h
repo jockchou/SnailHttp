@@ -5,5 +5,8 @@
 #define ZEPHIR_CLASS_ENTRIES_H
 
 #include "snailhttp/stream.zep.h"
+#include "snailhttp/uri.zep.h"
+#include "snailhttp/0__closure.zep.h"
+#include "snailhttp/1__closure.zep.h"
 
 #endif
