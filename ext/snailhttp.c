@@ -27,7 +27,10 @@
 
 
 
+zend_class_entry *snailhttp_0__closure_ce;
+zend_class_entry *snailhttp_1__closure_ce;
 zend_class_entry *snailhttp_stream_ce;
+zend_class_entry *snailhttp_uri_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(snailhttp)
 
@@ -54,6 +57,9 @@ static PHP_MINIT_FUNCTION(snailhttp)
 #endif
 	REGISTER_INI_ENTRIES();
 	ZEPHIR_INIT(SnailHttp_Stream);
+	ZEPHIR_INIT(SnailHttp_Uri);
+	ZEPHIR_INIT(snailhttp_0__closure);
+	ZEPHIR_INIT(snailhttp_1__closure);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);
@@ -115,6 +121,8 @@ static PHP_RINIT_FUNCTION(snailhttp)
 
 	zephir_initialize_memory(snailhttp_globals_ptr TSRMLS_CC);
 
+	zephir_init_static_properties_SnailHttp_Stream(TSRMLS_C);
+	zephir_init_static_properties_SnailHttp_Uri(TSRMLS_C);
 
 	return SUCCESS;
 }

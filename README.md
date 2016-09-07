@@ -1,2 +1,2 @@
 # SnailHttp
-PSR Http Message compliant package work as php-ext
+PSR-7 implementation worked as php-ext
