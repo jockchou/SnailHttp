@@ -4,6 +4,7 @@
 #ifndef ZEPHIR_CLASS_ENTRIES_H
 #define ZEPHIR_CLASS_ENTRIES_H
 
+#include "snailhttp/collectioninterface.zep.h"
 #include "snailhttp/stream.zep.h"
 #include "snailhttp/uri.zep.h"
 #include "snailhttp/0__closure.zep.h"
