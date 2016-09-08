@@ -43,7 +43,7 @@ PHP_METHOD(snailhttp_1__closure, __invoke) {
 	}
 
 
-	zephir_array_fetch_long(&_0, match, 0, PH_NOISY | PH_READONLY, "snailhttp/Uri.zep", 236 TSRMLS_CC);
+	zephir_array_fetch_long(&_0, match, 0, PH_NOISY | PH_READONLY, "snailhttp/Uri.zep", 309 TSRMLS_CC);
 	ZEPHIR_RETURN_CALL_FUNCTION("rawurlencode", NULL, 12, _0);
 	zephir_check_call_status();
 	RETURN_MM();

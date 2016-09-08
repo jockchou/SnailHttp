@@ -9,6 +9,7 @@ PHP_METHOD(SnailHttp_Uri, getUserInfo);
 PHP_METHOD(SnailHttp_Uri, getAuthority);
 PHP_METHOD(SnailHttp_Uri, getHost);
 PHP_METHOD(SnailHttp_Uri, getPort);
+PHP_METHOD(SnailHttp_Uri, hasStandardPort);
 PHP_METHOD(SnailHttp_Uri, getPath);
 PHP_METHOD(SnailHttp_Uri, getQuery);
 PHP_METHOD(SnailHttp_Uri, getFragment);
@@ -89,6 +90,7 @@ ZEPHIR_INIT_FUNCS(snailhttp_uri_method_entry) {
 	PHP_ME(SnailHttp_Uri, getAuthority, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(SnailHttp_Uri, getHost, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(SnailHttp_Uri, getPort, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(SnailHttp_Uri, hasStandardPort, NULL, ZEND_ACC_PROTECTED)
 	PHP_ME(SnailHttp_Uri, getPath, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(SnailHttp_Uri, getQuery, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(SnailHttp_Uri, getFragment, NULL, ZEND_ACC_PUBLIC)
