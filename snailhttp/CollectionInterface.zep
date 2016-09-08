@@ -6,17 +6,17 @@ namespace SnailHttp;
  */
 interface CollectionInterface extends \ArrayAccess, \Countable, \IteratorAggregate
 {
-    public function set(string key, var value);
+    public function set(string key, var value) -> void;
 
-    public function get(string key, var def = null);
+    public function get(string key, var def = null) -> var;
 
-    public function replace(array items);
+    public function replace(array items) -> void;
 
-    public function all();
+    public function all() -> array;
 
-    public function has(string key);
+    public function has(string key) -> boolean;
 
-    public function remove(string key);
+    public function remove(string key) -> void;
 
-    public function clear();
+    public function clear() -> void;
 }

@@ -30,6 +30,7 @@
 zend_class_entry *snailhttp_collectioninterface_ce;
 zend_class_entry *snailhttp_0__closure_ce;
 zend_class_entry *snailhttp_1__closure_ce;
+zend_class_entry *snailhttp_collection_ce;
 zend_class_entry *snailhttp_stream_ce;
 zend_class_entry *snailhttp_uri_ce;
 
@@ -58,6 +59,7 @@ static PHP_MINIT_FUNCTION(snailhttp)
 #endif
 	REGISTER_INI_ENTRIES();
 	ZEPHIR_INIT(SnailHttp_CollectionInterface);
+	ZEPHIR_INIT(SnailHttp_Collection);
 	ZEPHIR_INIT(SnailHttp_Stream);
 	ZEPHIR_INIT(SnailHttp_Uri);
 	ZEPHIR_INIT(snailhttp_0__closure);
