@@ -51,7 +51,7 @@ PHP_METHOD(SnailHttp_Headers, createFromGlobals) {
 	array_init(data);
 	ZEPHIR_INIT_VAR(env);
 	object_init_ex(env, snailhttp_collection_ce);
-	ZEPHIR_CALL_METHOD(NULL, env, "__construct", NULL, 8, globals);
+	ZEPHIR_CALL_METHOD(NULL, env, "__construct", NULL, 17, globals);
 	zephir_check_call_status();
 	zephir_is_iterable(env, &_1, &_0, 0, 0, "snailhttp/Headers.zep", 31);
 	for (
@@ -79,7 +79,7 @@ PHP_METHOD(SnailHttp_Headers, createFromGlobals) {
 		}
 	}
 	object_init_ex(return_value, snailhttp_headers_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 8, data);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 17, data);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -97,7 +97,7 @@ PHP_METHOD(SnailHttp_Headers, all) {
 
 	ZEPHIR_INIT_VAR(out);
 	array_init(out);
-	ZEPHIR_CALL_PARENT(&all, snailhttp_headers_ce, this_ptr, "all", &_0, 9);
+	ZEPHIR_CALL_PARENT(&all, snailhttp_headers_ce, this_ptr, "all", &_0, 18);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_1);
 	zephir_is_iterable(all, &_3, &_2, 0, 0, "snailhttp/Headers.zep", 44);
@@ -142,7 +142,7 @@ PHP_METHOD(SnailHttp_Headers, set) {
 	zephir_create_array(_2, 2, 0 TSRMLS_CC);
 	zephir_array_update_string(&_2, SL("value"), &value, PH_COPY | PH_SEPARATE);
 	zephir_array_update_string(&_2, SL("originalKey"), &key, PH_COPY | PH_SEPARATE);
-	ZEPHIR_CALL_PARENT(NULL, snailhttp_headers_ce, this_ptr, "set", &_0, 10, _1, _2);
+	ZEPHIR_CALL_PARENT(NULL, snailhttp_headers_ce, this_ptr, "set", &_0, 19, _1, _2);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -169,7 +169,7 @@ PHP_METHOD(SnailHttp_Headers, get) {
 	if (zephir_is_true(_0)) {
 		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "normalizekey", NULL, 0, key);
 		zephir_check_call_status();
-		ZEPHIR_CALL_PARENT(&_1$$3, snailhttp_headers_ce, this_ptr, "get", &_2, 11, _3$$3);
+		ZEPHIR_CALL_PARENT(&_1$$3, snailhttp_headers_ce, this_ptr, "get", &_2, 20, _3$$3);
 		zephir_check_call_status();
 		zephir_array_fetch_string(&_4$$3, _1$$3, SL("value"), PH_NOISY | PH_READONLY, "snailhttp/Headers.zep", 64 TSRMLS_CC);
 		RETURN_CTOR(_4$$3);
@@ -200,7 +200,7 @@ PHP_METHOD(SnailHttp_Headers, getOriginalKey) {
 	if (zephir_is_true(_0)) {
 		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "normalizekey", NULL, 0, key);
 		zephir_check_call_status();
-		ZEPHIR_CALL_PARENT(&_1$$3, snailhttp_headers_ce, this_ptr, "get", &_2, 11, _3$$3);
+		ZEPHIR_CALL_PARENT(&_1$$3, snailhttp_headers_ce, this_ptr, "get", &_2, 20, _3$$3);
 		zephir_check_call_status();
 		zephir_array_fetch_string(&_4$$3, _1$$3, SL("originalKey"), PH_NOISY | PH_READONLY, "snailhttp/Headers.zep", 74 TSRMLS_CC);
 		RETURN_CTOR(_4$$3);
@@ -234,7 +234,7 @@ PHP_METHOD(SnailHttp_Headers, add) {
 		zephir_array_fast_append(newValues, value);
 	}
 	ZEPHIR_INIT_VAR(_1);
-	ZEPHIR_CALL_FUNCTION(&_2, "array_values", NULL, 12, newValues);
+	ZEPHIR_CALL_FUNCTION(&_2, "array_values", NULL, 21, newValues);
 	zephir_check_call_status();
 	zephir_fast_array_merge(_1, &(oldValues), &(_2) TSRMLS_CC);
 	ZEPHIR_CALL_METHOD(NULL, this_ptr, "set", NULL, 0, key, _1);
@@ -258,7 +258,7 @@ PHP_METHOD(SnailHttp_Headers, has) {
 
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "normalizekey", NULL, 0, key);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_PARENT(snailhttp_headers_ce, this_ptr, "has", &_0, 13, _1);
+	ZEPHIR_RETURN_CALL_PARENT(snailhttp_headers_ce, this_ptr, "has", &_0, 22, _1);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -279,7 +279,7 @@ PHP_METHOD(SnailHttp_Headers, remove) {
 
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "normalizekey", NULL, 0, key);
 	zephir_check_call_status();
-	ZEPHIR_CALL_PARENT(NULL, snailhttp_headers_ce, this_ptr, "remove", &_0, 14, _1);
+	ZEPHIR_CALL_PARENT(NULL, snailhttp_headers_ce, this_ptr, "remove", &_0, 23, _1);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -304,7 +304,7 @@ PHP_METHOD(SnailHttp_Headers, normalizeKey) {
 	ZVAL_STRING(&_1, "_", 0);
 	ZEPHIR_SINIT_VAR(_2);
 	ZVAL_STRING(&_2, "-", 0);
-	ZEPHIR_CALL_FUNCTION(&_3, "strtr", NULL, 15, key, &_1, &_2);
+	ZEPHIR_CALL_FUNCTION(&_3, "strtr", NULL, 24, key, &_1, &_2);
 	zephir_check_call_status();
 	zephir_get_strval(key, _3);
 	ZEPHIR_SINIT_NVAR(_1);

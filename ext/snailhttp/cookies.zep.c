@@ -75,7 +75,7 @@ PHP_METHOD(SnailHttp_Cookies, setDefaults) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("defaults"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "array_replace", NULL, 2, _0, settings);
+	ZEPHIR_CALL_FUNCTION(&_1, "array_replace", NULL, 11, _0, settings);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("defaults"), _1 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -125,7 +125,7 @@ PHP_METHOD(SnailHttp_Cookies, set) {
 		zephir_array_update_string(&value, SL("value"), &_0$$3, PH_COPY | PH_SEPARATE);
 	}
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("defaults"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_2, "array_replace", NULL, 2, _1, value);
+	ZEPHIR_CALL_FUNCTION(&_2, "array_replace", NULL, 11, _1, value);
 	zephir_check_call_status();
 	zephir_update_property_array(this_ptr, SL("responseCookies"), name, _2 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -179,10 +179,10 @@ PHP_METHOD(SnailHttp_Cookies, toHeader) {
 	ZVAL_STRING(result, "", 1);
 	ZEPHIR_INIT_VAR(timestamp);
 	ZVAL_LONG(timestamp, 0);
-	ZEPHIR_CALL_FUNCTION(&_0, "urlencode", &_1, 3, name);
+	ZEPHIR_CALL_FUNCTION(&_0, "urlencode", &_1, 12, name);
 	zephir_check_call_status();
 	zephir_array_fetch_string(&_2, properties, SL("value"), PH_NOISY | PH_READONLY, "snailhttp/Cookies.zep", 64 TSRMLS_CC);
-	ZEPHIR_CALL_FUNCTION(&_3, "urlencode", &_1, 3, _2);
+	ZEPHIR_CALL_FUNCTION(&_3, "urlencode", &_1, 12, _2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(result);
 	ZEPHIR_CONCAT_VSV(result, _0, "=", _3);
@@ -207,7 +207,7 @@ PHP_METHOD(SnailHttp_Cookies, toHeader) {
 	ZEPHIR_OBS_VAR(expires);
 	if (zephir_array_isset_string_fetch(&expires, properties, SS("expires"), 0 TSRMLS_CC)) {
 		if (Z_TYPE_P(expires) == IS_STRING) {
-			ZEPHIR_CALL_FUNCTION(&timestamp, "strtotime", NULL, 4, expires);
+			ZEPHIR_CALL_FUNCTION(&timestamp, "strtotime", NULL, 13, expires);
 			zephir_check_call_status();
 		} else {
 			ZEPHIR_INIT_NVAR(timestamp);
@@ -216,7 +216,7 @@ PHP_METHOD(SnailHttp_Cookies, toHeader) {
 		if (!ZEPHIR_IS_LONG_IDENTICAL(timestamp, 0)) {
 			ZEPHIR_SINIT_VAR(_7$$9);
 			ZVAL_STRING(&_7$$9, "D, d-M-Y H:i:s e", 0);
-			ZEPHIR_CALL_FUNCTION(&_8$$9, "gmdate", NULL, 5, &_7$$9, timestamp);
+			ZEPHIR_CALL_FUNCTION(&_8$$9, "gmdate", NULL, 14, &_7$$9, timestamp);
 			zephir_check_call_status();
 			ZEPHIR_INIT_VAR(_9$$9);
 			ZEPHIR_CONCAT_SV(_9$$9, "; expires=", _8$$9);
@@ -271,7 +271,7 @@ PHP_METHOD(SnailHttp_Cookies, parseHeader) {
 	ZEPHIR_CPY_WRT(header, _1);
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_STRING(&_3, "@\\s*[;,]\\s*@", 0);
-	ZEPHIR_CALL_FUNCTION(&pieces, "preg_split", NULL, 6, &_3, header);
+	ZEPHIR_CALL_FUNCTION(&pieces, "preg_split", NULL, 15, &_3, header);
 	zephir_check_call_status();
 	zephir_is_iterable(pieces, &_5, &_4, 0, 0, "snailhttp/Cookies.zep", 130);
 	for (
@@ -284,10 +284,10 @@ PHP_METHOD(SnailHttp_Cookies, parseHeader) {
 		ZEPHIR_CPY_WRT(cookie, _7$$5);
 		if (zephir_fast_count_int(cookie TSRMLS_CC) == 2) {
 			zephir_array_fetch_long(&_8$$6, cookie, 0, PH_NOISY | PH_READONLY, "snailhttp/Cookies.zep", 121 TSRMLS_CC);
-			ZEPHIR_CALL_FUNCTION(&key, "urldecode", &_9, 7, _8$$6);
+			ZEPHIR_CALL_FUNCTION(&key, "urldecode", &_9, 16, _8$$6);
 			zephir_check_call_status();
 			zephir_array_fetch_long(&_10$$6, cookie, 1, PH_NOISY | PH_READONLY, "snailhttp/Cookies.zep", 122 TSRMLS_CC);
-			ZEPHIR_CALL_FUNCTION(&value, "urldecode", &_9, 7, _10$$6);
+			ZEPHIR_CALL_FUNCTION(&value, "urldecode", &_9, 16, _10$$6);
 			zephir_check_call_status();
 			if (!(zephir_array_isset(cookies, key))) {
 				zephir_array_update_zval(&cookies, key, &value, PH_COPY | PH_SEPARATE);
