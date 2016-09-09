@@ -12,6 +12,7 @@
 #include "snailhttp/body.zep.h"
 #include "snailhttp/cookies.zep.h"
 #include "snailhttp/environment.zep.h"
+#include "snailhttp/factoryinterface.zep.h"
 #include "snailhttp/headers.zep.h"
 #include "snailhttp/message.zep.h"
 #include "snailhttp/uri.zep.h"
