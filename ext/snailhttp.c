@@ -29,8 +29,8 @@
 
 zend_class_entry *snailhttp_collectioninterface_ce;
 zend_class_entry *snailhttp_cookiesinterface_ce;
-zend_class_entry *snailhttp_headersinterface_ce;
 zend_class_entry *snailhttp_factoryinterface_ce;
+zend_class_entry *snailhttp_headersinterface_ce;
 zend_class_entry *snailhttp_collection_ce;
 zend_class_entry *snailhttp_stream_ce;
 zend_class_entry *snailhttp_body_ce;
@@ -43,6 +43,7 @@ zend_class_entry *snailhttp_4__closure_ce;
 zend_class_entry *snailhttp_5__closure_ce;
 zend_class_entry *snailhttp_cookies_ce;
 zend_class_entry *snailhttp_environment_ce;
+zend_class_entry *snailhttp_factorydefault_ce;
 zend_class_entry *snailhttp_headers_ce;
 zend_class_entry *snailhttp_request_ce;
 zend_class_entry *snailhttp_requestbody_ce;
@@ -74,14 +75,15 @@ static PHP_MINIT_FUNCTION(snailhttp)
 	REGISTER_INI_ENTRIES();
 	ZEPHIR_INIT(SnailHttp_CollectionInterface);
 	ZEPHIR_INIT(SnailHttp_CookiesInterface);
-	ZEPHIR_INIT(SnailHttp_HeadersInterface);
 	ZEPHIR_INIT(SnailHttp_FactoryInterface);
+	ZEPHIR_INIT(SnailHttp_HeadersInterface);
 	ZEPHIR_INIT(SnailHttp_Collection);
 	ZEPHIR_INIT(SnailHttp_Stream);
 	ZEPHIR_INIT(SnailHttp_Body);
 	ZEPHIR_INIT(SnailHttp_Message);
 	ZEPHIR_INIT(SnailHttp_Cookies);
 	ZEPHIR_INIT(SnailHttp_Environment);
+	ZEPHIR_INIT(SnailHttp_FactoryDefault);
 	ZEPHIR_INIT(SnailHttp_Headers);
 	ZEPHIR_INIT(SnailHttp_Request);
 	ZEPHIR_INIT(SnailHttp_RequestBody);
@@ -155,6 +157,7 @@ static PHP_RINIT_FUNCTION(snailhttp)
 
 	zephir_init_static_properties_SnailHttp_Stream(TSRMLS_C);
 	zephir_init_static_properties_SnailHttp_Message(TSRMLS_C);
+	zephir_init_static_properties_SnailHttp_FactoryDefault(TSRMLS_C);
 	zephir_init_static_properties_SnailHttp_Headers(TSRMLS_C);
 	zephir_init_static_properties_SnailHttp_Request(TSRMLS_C);
 	zephir_init_static_properties_SnailHttp_Uri(TSRMLS_C);

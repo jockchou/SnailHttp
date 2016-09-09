@@ -37,7 +37,7 @@ PHP_METHOD(snailhttp_3__closure, __invoke) {
 	ZEPHIR_INIT_VAR(data);
 	ZVAL_NULL(data);
 	ZEPHIR_MAKE_REF(data);
-	ZEPHIR_CALL_FUNCTION(NULL, "parse_str", NULL, 26, input, data);
+	ZEPHIR_CALL_FUNCTION(NULL, "parse_str", NULL, 37, input, data);
 	ZEPHIR_UNREF(data);
 	zephir_check_call_status();
 	RETURN_CCTOR(data);

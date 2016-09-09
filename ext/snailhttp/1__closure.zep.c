@@ -34,11 +34,11 @@ PHP_METHOD(snailhttp_1__closure, __invoke) {
 
 
 
-	ZEPHIR_CALL_FUNCTION(&backup, "libxml_disable_entity_loader", NULL, 33, ZEPHIR_GLOBAL(global_true));
+	ZEPHIR_CALL_FUNCTION(&backup, "libxml_disable_entity_loader", NULL, 40, ZEPHIR_GLOBAL(global_true));
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&result, "simplexml_load_string", NULL, 34, input);
+	ZEPHIR_CALL_FUNCTION(&result, "simplexml_load_string", NULL, 41, input);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "libxml_disable_entity_loader", NULL, 33, backup);
+	ZEPHIR_CALL_FUNCTION(NULL, "libxml_disable_entity_loader", NULL, 40, backup);
 	zephir_check_call_status();
 	RETURN_CCTOR(result);
 

@@ -51,12 +51,11 @@ ZEPHIR_INIT_CLASS(SnailHttp_FactoryDefault) {
 
 PHP_METHOD(SnailHttp_FactoryDefault, makeRequest) {
 
-	zend_bool _5;
-	zephir_nts_static zend_class_entry *_4 = NULL;
+	zend_bool _4;
 	zephir_fcall_cache_entry *_0 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *globals_param = NULL, *_POST, *method = NULL, *uri = NULL, *headers = NULL, *cookies = NULL, *body = NULL, *files = NULL, *request = NULL, *mediaType = NULL, *_1 = NULL, *_2, *_3 = NULL, *_7$$3 = NULL;
-	zval *globals = NULL, *_6;
+	zval *globals_param = NULL, *_POST, *method = NULL, *uri = NULL, *headers = NULL, *cookies = NULL, *body = NULL, *files = NULL, *request = NULL, *mediaType = NULL, *_1 = NULL, *_2, *_3 = NULL, *_6$$3 = NULL;
+	zval *globals = NULL, *_5;
 
 	ZEPHIR_MM_GROW();
 	zephir_get_global(&_POST, SS("_POST") TSRMLS_CC);
@@ -85,32 +84,27 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeRequest) {
 	ZEPHIR_CALL_METHOD(&body, this_ptr, "makebody", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(request);
-	if (!_4) {
-		_4 = zend_fetch_class(SL("SnailHttp\\Request"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-	}
-	object_init_ex(request, _4);
-	if (zephir_has_constructor(request TSRMLS_CC)) {
-		ZEPHIR_CALL_METHOD(NULL, request, "__construct", NULL, 0, method, uri, headers, cookies, globals, body, files);
-		zephir_check_call_status();
-	}
-	ZEPHIR_CALL_METHOD(&mediaType, request, "getmediatype", NULL, 0);
+	object_init_ex(request, snailhttp_request_ce);
+	ZEPHIR_CALL_METHOD(NULL, request, "__construct", NULL, 18, method, uri, headers, cookies, globals, body, files);
 	zephir_check_call_status();
-	_5 = ZEPHIR_IS_STRING_IDENTICAL(method, "POST");
-	if (_5) {
-		ZEPHIR_INIT_VAR(_6);
-		zephir_create_array(_6, 2, 0 TSRMLS_CC);
+	ZEPHIR_CALL_METHOD(&mediaType, request, "getmediatype", NULL, 19);
+	zephir_check_call_status();
+	_4 = ZEPHIR_IS_STRING_IDENTICAL(method, "POST");
+	if (_4) {
+		ZEPHIR_INIT_VAR(_5);
+		zephir_create_array(_5, 2, 0 TSRMLS_CC);
 		ZEPHIR_INIT_NVAR(_3);
 		ZVAL_STRING(_3, "application/x-www-form-urlencoded", 1);
-		zephir_array_fast_append(_6, _3);
+		zephir_array_fast_append(_5, _3);
 		ZEPHIR_INIT_NVAR(_3);
 		ZVAL_STRING(_3, "multipart/form-data", 1);
-		zephir_array_fast_append(_6, _3);
-		_5 = zephir_fast_in_array(mediaType, _6 TSRMLS_CC);
+		zephir_array_fast_append(_5, _3);
+		_4 = zephir_fast_in_array(mediaType, _5 TSRMLS_CC);
 	}
-	if (_5) {
-		ZEPHIR_CALL_METHOD(&_7$$3, request, "withparsedbody", NULL, 0, _POST);
+	if (_4) {
+		ZEPHIR_CALL_METHOD(&_6$$3, request, "withparsedbody", NULL, 20, _POST);
 		zephir_check_call_status();
-		ZEPHIR_CPY_WRT(request, _7$$3);
+		ZEPHIR_CPY_WRT(request, _6$$3);
 	}
 	RETURN_CCTOR(request);
 
@@ -133,11 +127,11 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeUri) {
 	ZVAL_NULL(matches);
 	ZEPHIR_INIT_VAR(env);
 	object_init_ex(env, snailhttp_collection_ce);
-	ZEPHIR_CALL_METHOD(NULL, env, "__construct", NULL, 18, globals);
+	ZEPHIR_CALL_METHOD(NULL, env, "__construct", NULL, 21, globals);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_0);
 	ZVAL_STRING(_0, "HTTPS", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&isSecure, env, "get", NULL, 19, _0);
+	ZEPHIR_CALL_METHOD(&isSecure, env, "get", NULL, 22, _0);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	_1 = ZEPHIR_IS_EMPTY(isSecure);
@@ -155,7 +149,7 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeUri) {
 	ZVAL_STRING(_0, "PHP_AUTH_USER", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&username, env, "get", NULL, 19, _0, _2);
+	ZEPHIR_CALL_METHOD(&username, env, "get", NULL, 22, _0, _2);
 	zephir_check_temp_parameter(_0);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
@@ -163,25 +157,25 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeUri) {
 	ZVAL_STRING(_0, "PHP_AUTH_PW", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&password, env, "get", NULL, 19, _0, _2);
+	ZEPHIR_CALL_METHOD(&password, env, "get", NULL, 22, _0, _2);
 	zephir_check_temp_parameter(_0);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_0);
 	ZVAL_STRING(_0, "HTTP_HOST", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&_3, env, "has", NULL, 20, _0);
+	ZEPHIR_CALL_METHOD(&_3, env, "has", NULL, 23, _0);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	if (zephir_is_true(_3)) {
 		ZEPHIR_INIT_VAR(_4$$3);
 		ZVAL_STRING(_4$$3, "HTTP_HOST", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(&host, env, "get", NULL, 19, _4$$3);
+		ZEPHIR_CALL_METHOD(&host, env, "get", NULL, 22, _4$$3);
 		zephir_check_temp_parameter(_4$$3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_INIT_VAR(_5$$4);
 		ZVAL_STRING(_5$$4, "SERVER_NAME", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(&host, env, "get", NULL, 19, _5$$4);
+		ZEPHIR_CALL_METHOD(&host, env, "get", NULL, 22, _5$$4);
 		zephir_check_temp_parameter(_5$$4);
 		zephir_check_call_status();
 	}
@@ -189,7 +183,7 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeUri) {
 	ZVAL_STRING(_0, "SERVER_PORT", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_LONG(_2, 80);
-	ZEPHIR_CALL_METHOD(&_6, env, "get", NULL, 19, _0, _2);
+	ZEPHIR_CALL_METHOD(&_6, env, "get", NULL, 22, _0, _2);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	port = zephir_get_intval(_6);
@@ -222,27 +216,27 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeUri) {
 			port = zephir_get_intval(_14$$8);
 			ZEPHIR_SINIT_VAR(_15$$8);
 			ZVAL_STRING(&_15$$8, ":", 0);
-			ZEPHIR_CALL_FUNCTION(&_16$$8, "strstr", NULL, 21, host, &_15$$8, ZEPHIR_GLOBAL(global_true));
+			ZEPHIR_CALL_FUNCTION(&_16$$8, "strstr", NULL, 24, host, &_15$$8, ZEPHIR_GLOBAL(global_true));
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(host, _16$$8);
 		}
 	}
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "REQUEST_URI", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&_17, env, "get", NULL, 19, _2);
+	ZEPHIR_CALL_METHOD(&_17, env, "get", NULL, 22, _2);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_18);
 	ZEPHIR_CONCAT_SV(_18, "http://example.com", _17);
 	ZEPHIR_SINIT_VAR(_19);
 	ZVAL_LONG(&_19, 5);
-	ZEPHIR_CALL_FUNCTION(&requestUri, "parse_url", NULL, 22, _18, &_19);
+	ZEPHIR_CALL_FUNCTION(&requestUri, "parse_url", NULL, 25, _18, &_19);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "QUERY_STRING", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_20);
 	ZVAL_STRING(_20, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&queryString, env, "get", NULL, 19, _2, _20);
+	ZEPHIR_CALL_METHOD(&queryString, env, "get", NULL, 22, _2, _20);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_20);
 	zephir_check_call_status();
@@ -251,7 +245,7 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeUri) {
 	object_init_ex(return_value, snailhttp_uri_ce);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_LONG(_2, port);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 23, scheme, host, _2, requestUri, queryString, fragment, username, password);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, scheme, host, _2, requestUri, queryString, fragment, username, password);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -300,7 +294,7 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeHeaders) {
 		}
 	}
 	object_init_ex(return_value, snailhttp_headers_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 18, data);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 21, data);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -318,20 +312,20 @@ PHP_METHOD(SnailHttp_FactoryDefault, makeBody) {
 	ZVAL_STRING(&_0, "php://temp", 0);
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "w+", 0);
-	ZEPHIR_CALL_FUNCTION(&stream, "fopen", &_2, 24, &_0, &_1);
+	ZEPHIR_CALL_FUNCTION(&stream, "fopen", &_2, 27, &_0, &_1);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_0);
 	ZVAL_STRING(&_0, "php://input", 0);
 	ZEPHIR_SINIT_NVAR(_1);
 	ZVAL_STRING(&_1, "r", 0);
-	ZEPHIR_CALL_FUNCTION(&_3, "fopen", &_2, 24, &_0, &_1);
+	ZEPHIR_CALL_FUNCTION(&_3, "fopen", &_2, 27, &_0, &_1);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "stream_copy_to_stream", NULL, 25, _3, stream);
+	ZEPHIR_CALL_FUNCTION(NULL, "stream_copy_to_stream", NULL, 28, _3, stream);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "rewind", NULL, 26, stream);
+	ZEPHIR_CALL_FUNCTION(NULL, "rewind", NULL, 29, stream);
 	zephir_check_call_status();
 	object_init_ex(return_value, snailhttp_stream_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, stream);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 30, stream);
 	zephir_check_call_status();
 	RETURN_MM();
 

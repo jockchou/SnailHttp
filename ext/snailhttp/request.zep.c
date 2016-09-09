@@ -88,7 +88,7 @@ PHP_METHOD(SnailHttp_Request, __construct) {
 	zephir_update_property_this(this_ptr, SL("serverParams"), serverParams TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, snailhttp_collection_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 17);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 21);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("attributes"), _1 TSRMLS_CC);
 	zephir_update_property_this(this_ptr, SL("body"), body TSRMLS_CC);
@@ -253,7 +253,7 @@ PHP_METHOD(SnailHttp_Request, filterMethod) {
 		ZVAL_STRING(&_2$$4, "Unsupported HTTP method; must be a string, received %s", 0);
 		ZEPHIR_CALL_FUNCTION(&_3$$4, "sprintf", &_4, 8, &_2$$4, _1$$4);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(NULL, _0$$4, "__construct", NULL, 25, _3$$4);
+		ZEPHIR_CALL_METHOD(NULL, _0$$4, "__construct", NULL, 36, _3$$4);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_0$$4, "snailhttp/Request.zep", 126 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
@@ -270,7 +270,7 @@ PHP_METHOD(SnailHttp_Request, filterMethod) {
 		ZVAL_STRING(&_8$$5, "Unsupported HTTP method \"%s\" provided", 0);
 		ZEPHIR_CALL_FUNCTION(&_9$$5, "sprintf", &_4, 8, &_8$$5, method);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(NULL, _7$$5, "__construct", NULL, 25, _9$$5);
+		ZEPHIR_CALL_METHOD(NULL, _7$$5, "__construct", NULL, 36, _9$$5);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_7$$5, "snailhttp/Request.zep", 134 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
@@ -475,7 +475,7 @@ PHP_METHOD(SnailHttp_Request, getQueryParams) {
 	zephir_check_call_status();
 	_4 = zephir_fetch_nproperty_this(this_ptr, SL("queryParams"), PH_NOISY_CC);
 	ZEPHIR_MAKE_REF(_4);
-	ZEPHIR_CALL_FUNCTION(NULL, "parse_str", NULL, 26, _3, _4);
+	ZEPHIR_CALL_FUNCTION(NULL, "parse_str", NULL, 37, _3, _4);
 	ZEPHIR_UNREF(_4);
 	zephir_check_call_status();
 	RETURN_MM_MEMBER(this_ptr, "queryParams");
