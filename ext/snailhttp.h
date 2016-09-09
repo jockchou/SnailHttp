@@ -6,6 +6,8 @@
 
 #include "snailhttp/collectioninterface.zep.h"
 #include "snailhttp/collection.zep.h"
+#include "snailhttp/headersinterface.zep.h"
+#include "snailhttp/headers.zep.h"
 #include "snailhttp/message.zep.h"
 #include "snailhttp/stream.zep.h"
 #include "snailhttp/uri.zep.h"
