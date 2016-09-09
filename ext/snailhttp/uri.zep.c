@@ -634,7 +634,7 @@ PHP_METHOD(SnailHttp_Uri, filterPort) {
 
 	_0 = Z_TYPE_P(port) == IS_NULL;
 	if (!(_0)) {
-		ZEPHIR_CALL_FUNCTION(&_1, "is_integer", NULL, 25, port);
+		ZEPHIR_CALL_FUNCTION(&_1, "is_integer", NULL, 31, port);
 		zephir_check_call_status();
 		_2 = zephir_is_true(_1);
 		if (_2) {
@@ -669,10 +669,10 @@ PHP_METHOD(SnailHttp_Uri, filterPath) {
 
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_INIT_NVAR(_0);
-	zephir_create_closure_ex(_0, NULL, snailhttp_0__closure_ce, SS("__invoke") TSRMLS_CC);
+	zephir_create_closure_ex(_0, NULL, snailhttp_4__closure_ce, SS("__invoke") TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_1);
 	ZVAL_STRING(_1, "/(?:[^a-zA-Z0-9_\\-\\.~:@&=\\+\\$,\\/;%]+|%(?![A-Fa-f0-9]{2}))/", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace_callback", NULL, 26, _1, _0, path);
+	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace_callback", NULL, 32, _1, _0, path);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
 	RETURN_MM();
@@ -693,10 +693,10 @@ PHP_METHOD(SnailHttp_Uri, filterQuery) {
 
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_INIT_NVAR(_0);
-	zephir_create_closure_ex(_0, NULL, snailhttp_1__closure_ce, SS("__invoke") TSRMLS_CC);
+	zephir_create_closure_ex(_0, NULL, snailhttp_5__closure_ce, SS("__invoke") TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_1);
 	ZVAL_STRING(_1, "/(?:[^a-zA-Z0-9_\\-\\.~!\\$&\\'\\(\\)\\*\\+,;=%:@\\/\\?]+|%(?![A-Fa-f0-9]{2}))/", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace_callback", NULL, 26, _1, _0, query);
+	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace_callback", NULL, 32, _1, _0, query);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
 	RETURN_MM();

@@ -12,10 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/array.h"
-#include "kernel/fcall.h"
-#include "kernel/memory.h"
+#include "kernel/string.h"
 #include "kernel/operators.h"
+#include "kernel/memory.h"
 
 
 ZEPHIR_INIT_CLASS(snailhttp_0__closure) {
@@ -28,25 +27,14 @@ ZEPHIR_INIT_CLASS(snailhttp_0__closure) {
 
 PHP_METHOD(snailhttp_0__closure, __invoke) {
 
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *match_param = NULL, *_0;
-	zval *match = NULL;
+	zval *input;
 
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &match_param);
-
-	if (!match_param) {
-		ZEPHIR_INIT_VAR(match);
-		array_init(match);
-	} else {
-		zephir_get_arrval(match, match_param);
-	}
+	zephir_fetch_params(0, 1, 0, &input);
 
 
-	zephir_array_fetch_long(&_0, match, 0, PH_NOISY | PH_READONLY, "snailhttp/Uri.zep", 298 TSRMLS_CC);
-	ZEPHIR_RETURN_CALL_FUNCTION("rawurlencode", NULL, 27, _0);
-	zephir_check_call_status();
-	RETURN_MM();
+
+	zephir_json_decode(return_value, &(return_value), input, zephir_get_intval(ZEPHIR_GLOBAL(global_true))  TSRMLS_CC);
+	return;
 
 }
 

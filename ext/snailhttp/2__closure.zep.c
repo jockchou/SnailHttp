@@ -16,15 +16,15 @@
 #include "kernel/memory.h"
 
 
-ZEPHIR_INIT_CLASS(snailhttp_1__closure) {
+ZEPHIR_INIT_CLASS(snailhttp_2__closure) {
 
-	ZEPHIR_REGISTER_CLASS(snailhttp, 1__closure, snailhttp, 1__closure, snailhttp_1__closure_method_entry, ZEND_ACC_FINAL_CLASS);
+	ZEPHIR_REGISTER_CLASS(snailhttp, 2__closure, snailhttp, 2__closure, snailhttp_2__closure_method_entry, ZEND_ACC_FINAL_CLASS);
 
 	return SUCCESS;
 
 }
 
-PHP_METHOD(snailhttp_1__closure, __invoke) {
+PHP_METHOD(snailhttp_2__closure, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *input, *backup = NULL, *result = NULL;

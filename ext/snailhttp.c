@@ -33,13 +33,19 @@ zend_class_entry *snailhttp_headersinterface_ce;
 zend_class_entry *snailhttp_factoryinterface_ce;
 zend_class_entry *snailhttp_collection_ce;
 zend_class_entry *snailhttp_stream_ce;
+zend_class_entry *snailhttp_body_ce;
+zend_class_entry *snailhttp_message_ce;
 zend_class_entry *snailhttp_0__closure_ce;
 zend_class_entry *snailhttp_1__closure_ce;
-zend_class_entry *snailhttp_body_ce;
+zend_class_entry *snailhttp_2__closure_ce;
+zend_class_entry *snailhttp_3__closure_ce;
+zend_class_entry *snailhttp_4__closure_ce;
+zend_class_entry *snailhttp_5__closure_ce;
 zend_class_entry *snailhttp_cookies_ce;
 zend_class_entry *snailhttp_environment_ce;
 zend_class_entry *snailhttp_headers_ce;
-zend_class_entry *snailhttp_message_ce;
+zend_class_entry *snailhttp_request_ce;
+zend_class_entry *snailhttp_requestbody_ce;
 zend_class_entry *snailhttp_uri_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(snailhttp)
@@ -73,13 +79,19 @@ static PHP_MINIT_FUNCTION(snailhttp)
 	ZEPHIR_INIT(SnailHttp_Collection);
 	ZEPHIR_INIT(SnailHttp_Stream);
 	ZEPHIR_INIT(SnailHttp_Body);
+	ZEPHIR_INIT(SnailHttp_Message);
 	ZEPHIR_INIT(SnailHttp_Cookies);
 	ZEPHIR_INIT(SnailHttp_Environment);
 	ZEPHIR_INIT(SnailHttp_Headers);
-	ZEPHIR_INIT(SnailHttp_Message);
+	ZEPHIR_INIT(SnailHttp_Request);
+	ZEPHIR_INIT(SnailHttp_RequestBody);
 	ZEPHIR_INIT(SnailHttp_Uri);
 	ZEPHIR_INIT(snailhttp_0__closure);
 	ZEPHIR_INIT(snailhttp_1__closure);
+	ZEPHIR_INIT(snailhttp_2__closure);
+	ZEPHIR_INIT(snailhttp_3__closure);
+	ZEPHIR_INIT(snailhttp_4__closure);
+	ZEPHIR_INIT(snailhttp_5__closure);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);
@@ -142,8 +154,9 @@ static PHP_RINIT_FUNCTION(snailhttp)
 	zephir_initialize_memory(snailhttp_globals_ptr TSRMLS_CC);
 
 	zephir_init_static_properties_SnailHttp_Stream(TSRMLS_C);
-	zephir_init_static_properties_SnailHttp_Headers(TSRMLS_C);
 	zephir_init_static_properties_SnailHttp_Message(TSRMLS_C);
+	zephir_init_static_properties_SnailHttp_Headers(TSRMLS_C);
+	zephir_init_static_properties_SnailHttp_Request(TSRMLS_C);
 	zephir_init_static_properties_SnailHttp_Uri(TSRMLS_C);
 
 	return SUCCESS;
