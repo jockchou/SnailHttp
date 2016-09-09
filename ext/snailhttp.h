@@ -6,7 +6,9 @@
 
 #include "snailhttp/collectioninterface.zep.h"
 #include "snailhttp/collection.zep.h"
+#include "snailhttp/cookiesinterface.zep.h"
 #include "snailhttp/headersinterface.zep.h"
+#include "snailhttp/cookies.zep.h"
 #include "snailhttp/headers.zep.h"
 #include "snailhttp/message.zep.h"
 #include "snailhttp/stream.zep.h"
